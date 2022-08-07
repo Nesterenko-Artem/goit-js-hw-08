@@ -11,7 +11,7 @@ function onSaveDateLocalStor(evt) {
   const storageData = loadData(LOCALSTORAGE_KEY, {});
   //   const message = evt.target.value;
   storageData[evt.target.name] = evt.target.value;
-  console.log(storageData);
+  
 
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(storageData));
 }
@@ -40,7 +40,7 @@ function handleSubmit(event) {
   if (value.email === '' || value.message === '') {
     return alert('Поля не могут быть пустыми !');
   }
-
+  console.log(value);
   localStorage.removeItem(LOCALSTORAGE_KEY);
   event.currentTarget.reset();
 }
