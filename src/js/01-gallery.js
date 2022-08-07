@@ -1,11 +1,12 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
+import { galleryRef } from './scripts/refs';
+
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 // ==========================
 
-console.log(galleryItems);
-const galleryRef = document.querySelector('.gallery');
+// const galleryRef = document.querySelector('.gallery');
 const cardsMarkup = renderCardGalery(galleryItems);
 
 galleryRef.insertAdjacentHTML('beforeend', cardsMarkup);
