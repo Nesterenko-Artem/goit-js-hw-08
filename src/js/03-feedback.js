@@ -1,32 +1,44 @@
 import throttle from 'lodash.throttle';
 import { ref } from '../js/scripts/refs';
-// const ref ={
-//     form: document.querySelector('.feedback-form'),
-//     texterea: document.querySelector('textarea'),
-//     button: document.querySelector('button'),
-// }
 
-ref.form.addEventListener('submit', onFormSabmit);
-ref.texterea.addEventListener('input', onTextareaInput);
+ref.form.addEventListener('submit', handleSubmit);
+ref.form.addEventListener('input', throttle(onSaveDateLocalStor, 500));
+const LOCALSTORAGE_KEY = 'feedback-form-state';
+addEventListener('DOMContentLoaded', updateFormFields);
 
-function onTextareaInput(evt) {
-  const message = evt.currentTarget.value;
+function onSaveDateLocalStor(evt) {
+  const storageData = loadData(LOCALSTORAGE_KEY, {});
+  //   const message = evt.target.value;
+  storageData[evt.target.name] = evt.target.value;
+  console.log(storageData);
 
-  localStorage.setItem('message', message);
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(storageData));
 }
 
-function onFormSabmit(evt) {
-  evt.preventDefault();
-  console.log('sabmit');
-  evt.currentTarget.reset();
-}
-
-function populateTextarea() {
-  const saveMessage = localStorage.getItem('message');
-  if (saveMessage) {
-    console.log(saveMessage);
+function loadData(key, defaultValue) {
+  try {
+    const result = JSON.parse(localStorage.getItem(key));
+    return result ? result : defaultValue;
+  } catch (error) {
+    console.error('Get state error: ', error.message);
   }
 }
-// console.log(ref.button)
-// console.log(ref.form)
-// console.log(ref.texterea);
+function updateFormFields() {
+  const updateData = loadData(LOCALSTORAGE_KEY, {});
+  ref.form.email.value = updateData.email || '';
+  ref.form.message.value = updateData.message || '';
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+
+  const data = new FormData(event.currentTarget);
+  const value = Object.fromEntries(data.entries());
+
+  if (value.email === '' || value.message === '') {
+    return alert('Поля не могут быть пустыми !');
+  }
+
+  localStorage.removeItem(LOCALSTORAGE_KEY);
+  event.currentTarget.reset();
+}
