@@ -40,7 +40,7 @@ function handleSubmit(event) {
   if (value.email === '' || value.message === '') {
     return alert('Поля не могут быть пустыми !');
   }
-  console.log(value);
+  console.table(value);
   localStorage.removeItem(LOCALSTORAGE_KEY);
   event.currentTarget.reset();
 }
