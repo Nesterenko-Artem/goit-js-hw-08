@@ -1,5 +1,6 @@
 import Player from '@vimeo/player';
-import { throttle } from 'lodash.throttle';
+// import { throttle } from 'lodash.throttle';
+const throttle = require('lodash.throttle');
 
 
 const iframe = document.querySelector('#vimeo-player');
@@ -13,7 +14,7 @@ let storageTime = checkStorageTime(saveTime);
 
 player.setCurrentTime(storageTime).then(function (seconds) {});
 
-player.on('timeupdate', throttle(saveCurrentTime, 1000));
+player.on('timeupdate',throttle(saveCurrentTime, 1000));
 
 function checkStorageTime(time) {
   try {

@@ -1,5 +1,6 @@
 
-import { throttle } from 'lodash.throttle';
+import throttle from 'lodash.throttle';
+
 const ref ={
     form: document.querySelector('.feedback-form'),
     texterea: document.querySelector('textarea'),
