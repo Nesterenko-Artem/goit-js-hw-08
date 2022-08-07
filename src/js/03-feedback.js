@@ -3,6 +3,7 @@ import { ref } from '../js/scripts/refs';
 
 ref.form.addEventListener('submit', handleSubmit);
 ref.form.addEventListener('input', throttle(onSaveDateLocalStor, 500));
+
 const LOCALSTORAGE_KEY = 'feedback-form-state';
 addEventListener('DOMContentLoaded', updateFormFields);
 
@@ -23,6 +24,7 @@ function loadData(key, defaultValue) {
     console.error('Get state error: ', error.message);
   }
 }
+
 function updateFormFields() {
   const updateData = loadData(LOCALSTORAGE_KEY, {});
   ref.form.email.value = updateData.email || '';
